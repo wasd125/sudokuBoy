@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sudokuBoy", "SudokuBoy\sudokuBoy.csproj", "{70B9E4EB-2723-4BB4-A205-C9B51E01BFA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sudokuBoy", "SudokuBoy\sudokuBoy\sudokuBoy.csproj", "{CCAFB894-B63C-485C-8B30-5761CAD76D02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70B9E4EB-2723-4BB4-A205-C9B51E01BFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70B9E4EB-2723-4BB4-A205-C9B51E01BFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70B9E4EB-2723-4BB4-A205-C9B51E01BFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70B9E4EB-2723-4BB4-A205-C9B51E01BFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCAFB894-B63C-485C-8B30-5761CAD76D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCAFB894-B63C-485C-8B30-5761CAD76D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCAFB894-B63C-485C-8B30-5761CAD76D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCAFB894-B63C-485C-8B30-5761CAD76D02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

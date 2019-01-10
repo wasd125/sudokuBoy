@@ -1,0 +1,6 @@
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\bin\Debug\sudokuBoy.exe.config
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\bin\Debug\sudokuBoy.exe
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\bin\Debug\sudokuBoy.pdb
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\obj\Debug\sudokuBoy.csprojResolveAssemblyReference.cache
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\obj\Debug\sudokuBoy.exe
+C:\Users\Michael\projects\sudokuBoy\SudokuBoy\sudokuBoy\obj\Debug\sudokuBoy.pdb
