@@ -10,8 +10,6 @@ namespace SudokuBoy
     {
         public void ZeicheGrid(int[,] zahlen)
         {
-            Console.Clear();
-
             for (int y = 0; y < 9; y++)
             {
                 if (y > 0 && y % 3 == 0)
