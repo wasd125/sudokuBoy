@@ -13,12 +13,8 @@ namespace SudokuBoy
             _zellen = new SudokuZelle[9, 9];
             _ui = new Ui();
             for (int x = 0; x < 9; x++)
-            {
                 for (int y = 0; y < 9; y++)
-                {
                     _zellen[x, y] = new SudokuZelle();
-                }
-            }
         }
 
         private SudokuZelle[,] _zellen;
@@ -29,12 +25,8 @@ namespace SudokuBoy
             var feldAlsInt = new int[9, 9];
 
             for (int x = 0; x < 9; x++)
-            {
                 for (int y = 0; y < 9; y++)
-                {
                     feldAlsInt[x, y] = spielfeld._zellen[x, y];
-                }
-            }
 
             return feldAlsInt;
         }
@@ -42,12 +34,8 @@ namespace SudokuBoy
         public void SetzeZahlen(int[,] zahlen)
         {
             for (int x = 0; x < 9; x++)
-            {
                 for (int y = 0; y < 9; y++)
-                {
                     _zellen[y, x].SetzeWert(zahlen[x, y]);
-                }
-            }
         }
 
         public void SetzeZahl(int x, int y, int wert)
@@ -57,12 +45,12 @@ namespace SudokuBoy
 
         public void Loesen()
         {
+            Console.WriteLine("Initiales Sudoku:");
             _ui.ZeicheGrid(this);
 
             do
             {
                 for (int x = 0; x < 9; x++)
-                {
                     for (int y = 0; y < 9; y++)
                     {
                         var zelle = _zellen[x, y];
@@ -71,8 +59,9 @@ namespace SudokuBoy
 
                         ZellePruefen(x, y, zelle);
                     }
-                }
             } while (HatUnfertigeZelle);
+            Console.WriteLine("");
+            Console.WriteLine("Gelöstes Sudoku:");
             _ui.ZeicheGrid(this);
         }
 
@@ -85,10 +74,7 @@ namespace SudokuBoy
             BlockPruefen(posX, posY, moeglicheWerte);
 
             if (moeglicheWerte.Count == 1)
-            {
                 zelle.SetzeWert(moeglicheWerte.FirstOrDefault());
-                _ui.ZeicheGrid(this);
-            }
         }
 
         private void ReihePruefen(int posX, int posY, List<int> moeglicheWerte)
@@ -135,7 +121,6 @@ namespace SudokuBoy
                 startY = 6;
 
             for (int x = startX; x < startX + 3; x++)
-            {
                 for (int y = startY; y < startY + 3; y++)
                 {
                     if (posX == y || posY == y)
@@ -145,7 +130,7 @@ namespace SudokuBoy
                     if (nachbarZelle.IstFertig && moeglicheWerte.Contains(nachbarZelle.Wert))
                         moeglicheWerte.Remove(nachbarZelle.Wert);
                 }
-            }
+
         }
 
         private bool HatUnfertigeZelle
@@ -153,13 +138,10 @@ namespace SudokuBoy
             get
             {
                 for (int x = 0; x < 9; x++)
-                {
                     for (int y = 0; y < 9; y++)
-                    {
                         if (_zellen[x, y].IstFertig == false)
                             return true;
-                    }
-                }
+
                 return false;
             }
         }
