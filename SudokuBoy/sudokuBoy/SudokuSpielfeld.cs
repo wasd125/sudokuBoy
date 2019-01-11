@@ -14,11 +14,22 @@ namespace SudokuBoy
             _ui = new Ui();
             for (int x = 0; x < 9; x++)
                 for (int y = 0; y < 9; y++)
-                    _zellen[x, y] = new SudokuZelle();
+                    _zellen[x, y] = new SudokuZelle(x,y);
+        }
+
+        public SudokuSpielfeld(SudokuSpielfeld spielfeld)
+        {
+            _zellen = new SudokuZelle[9, 9];
+            _ui = new Ui();
+            for (int x = 0; x < 9; x++)
+                for (int y = 0; y < 9; y++)
+                    _zellen[x, y] = new SudokuZelle(spielfeld._zellen[x, y],x,y);
         }
 
         private SudokuZelle[,] _zellen;
         private Ui _ui;
+
+        private static bool _geloest = false;
 
         public static implicit operator int[,] (SudokuSpielfeld spielfeld)
         {
@@ -36,6 +47,9 @@ namespace SudokuBoy
             for (int x = 0; x < 9; x++)
                 for (int y = 0; y < 9; y++)
                     _zellen[y, x].SetzeWert(zahlen[x, y]);
+
+            Console.WriteLine("Initiales Sudoku:");
+            _ui.ZeicheGrid(this);
         }
 
         public void SetzeZahl(int x, int y, int wert)
@@ -43,13 +57,11 @@ namespace SudokuBoy
             _zellen[x,y].SetzeWert(wert);
         }
 
-        public void Loesen()
+        public bool Loesen()
         {
-            Console.WriteLine("Initiales Sudoku:");
-            _ui.ZeicheGrid(this);
-
             do
             {
+                var zelleGeaendert = false;
                 for (int x = 0; x < 9; x++)
                     for (int y = 0; y < 9; y++)
                     {
@@ -57,15 +69,52 @@ namespace SudokuBoy
                         if (zelle.IstFertig)
                             continue;
 
-                        ZellePruefen(x, y, zelle);
+                        var aktulleZelleGeaendert  = ZellePruefen(x, y, zelle);
+
+                         if (zelleGeaendert == false && aktulleZelleGeaendert)
+                            zelleGeaendert = true;
                     }
+
+                if (GetZellenNachAnzahlWerten().Any(p => p.IstUnloesbar))
+                    return false;
+
+                if (zelleGeaendert == false)
+                {
+                    LoeseRekursiv();
+                    if (_geloest)
+                        return true;
+                }
+
             } while (HatUnfertigeZelle);
-            Console.WriteLine("");
-            Console.WriteLine("Gelöstes Sudoku:");
-            _ui.ZeicheGrid(this);
+
+            return true;
         }
 
-        private void ZellePruefen(int posX, int posY, SudokuZelle zelle)
+        private void LoeseRekursiv()
+        {
+            var zellen = GetZellenNachAnzahlWerten();
+
+            foreach (var zelle in zellen)
+            {               
+                foreach (var wert in zelle.MoeglicheWerte)
+                {
+                    var spielfeldKopie = new SudokuSpielfeld(this);
+                    spielfeldKopie.SetzeZahl(zelle.PositionX, zelle.PositionY, wert);
+                    _geloest = spielfeldKopie.Loesen();
+
+                    if (_geloest)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("Gelöstes Sudoku:");
+                        _ui.ZeicheGrid(spielfeldKopie);
+                        _geloest = true;
+                        return;
+                    }
+                }
+            }
+        }
+
+        private bool ZellePruefen(int posX, int posY, SudokuZelle zelle)
         {
             var moeglicheWerte = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
@@ -73,8 +122,15 @@ namespace SudokuBoy
             SpaltePruefen(posX, posY, moeglicheWerte);
             BlockPruefen(posX, posY, moeglicheWerte);
 
+            zelle.MoeglicheWerte = moeglicheWerte;
+
             if (moeglicheWerte.Count == 1)
+            {
                 zelle.SetzeWert(moeglicheWerte.FirstOrDefault());
+                return true;
+            }
+
+            return false;
         }
 
         private void ReihePruefen(int posX, int posY, List<int> moeglicheWerte)
@@ -144,6 +200,23 @@ namespace SudokuBoy
 
                 return false;
             }
+        }
+
+        private List<SudokuZelle> GetZellenNachAnzahlWerten()
+        {
+            var sudokuZellen = new List<SudokuZelle>();
+            for (int x = 0; x < 9; x++)
+            {
+                for (int y = 0; y < 9; y++)
+                {
+                    var zelle = _zellen[x, y];
+                    if (zelle.IstFertig)
+                        continue;
+
+                    sudokuZellen.Add(zelle);
+                }
+            }
+            return sudokuZellen.OrderBy(p => p.AnzahlWerte).ToList();
         }
     }
 }
